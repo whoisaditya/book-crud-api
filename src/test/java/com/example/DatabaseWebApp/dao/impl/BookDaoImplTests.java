@@ -60,4 +60,14 @@ public class BookDaoImplTests {
                 eq("70-57-64-82-83"), eq("The secret life of Aditya Mitra"), eq(1L), eq("70-57-64-82-83")
         );
     }
+
+    @Test
+    public void thatThatDeleteGeneratesCorrectSQL() {
+        underTest.delete("70-57-64-82-83");
+
+        verify(jdbcTemplate).update(
+                eq("DELETE FROM books WHERE isbn = ?"),
+                eq("70-57-64-82-83")
+        );
+    }
 }

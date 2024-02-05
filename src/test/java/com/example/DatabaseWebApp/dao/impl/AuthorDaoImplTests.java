@@ -72,5 +72,5 @@ public class AuthorDaoImplTests {
                 eq("DELETE FROM authors WHERE id = ?"),
                 eq(1L)
         );
-     }
+    }
 }

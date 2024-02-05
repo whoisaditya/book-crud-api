@@ -74,5 +74,4 @@ public class AuthorDaoImplIntegrationTest {
          Optional<Author> result = underTest.findOne(authorA.getId());
          assertThat(result).isEmpty();
     }
-
 }
