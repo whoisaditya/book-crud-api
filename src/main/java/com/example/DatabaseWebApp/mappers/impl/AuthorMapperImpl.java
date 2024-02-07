@@ -4,11 +4,13 @@ import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
 import com.example.DatabaseWebApp.domain.dto.AuthorDto;
 import com.example.DatabaseWebApp.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorMapperImpl implements Mapper<AuthorEntity, AuthorDto> {
 
+    @Autowired
     private ModelMapper modelMapper;
 
     public AuthorMapperImpl(ModelMapper modelMapper) {

@@ -22,8 +22,8 @@ public class AuthorController {
     private Mapper<AuthorEntity, AuthorDto> authorMapper;
 
     @PostMapping(path = "/authors")
-    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author) {
-        AuthorEntity authorEntity = authorMapper.mapFrom(author);
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
+        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
         AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity);
 //        System.out.println(savedAuthorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
