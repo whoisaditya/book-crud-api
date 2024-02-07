@@ -1,16 +1,19 @@
 package com.example.DatabaseWebApp.repositories;
 
-import com.example.DatabaseWebApp.domain.Author;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AuthorRepository extends CrudRepository<Author, Long> {
-    Iterable<Author> ageLessThan(int age);
+@Transactional
+public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
 
-    @Query("SELECT a from Author a where a.age > ?1")
-    Iterable<Author> findAuthorsWithAgeGreaterThan(int age);
+    Iterable<AuthorEntity> ageLessThan(int age);
+
+    @Query("SELECT a from com.example.DatabaseWebApp.domain.entities.AuthorEntity a where a.age > :age")
+    Iterable<AuthorEntity> findAuthorsWithAgeGreaterThan(@Param("age") int age);
 }

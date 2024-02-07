@@ -1,7 +1,7 @@
 package com.example.DatabaseWebApp.repositories;
 
-import com.example.DatabaseWebApp.domain.Book;
-import org.springframework.data.repository.CrudRepository;
+import com.example.DatabaseWebApp.domain.entities.BookEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BookRepository extends CrudRepository<Book, String> {
+public interface BookRepository extends JpaRepository<BookEntity, String> {
 }

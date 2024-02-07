@@ -1,8 +1,9 @@
-package com.example.DatabaseWebApp.domain;
+package com.example.DatabaseWebApp.domain.entities;
 
 
 import jakarta.persistence.*;
 import lombok.*;
+//import javax.validation.constraints.*;
 
 @Data
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "authors")
-public class Author {
+public class AuthorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_seq")
     @Column(name = "id")
