@@ -28,7 +28,7 @@ public class AuthorControllerIntegrationTests {
     private ObjectMapper objectMapper;
 
     @Test
-    public  void testThatCreateAuthorSuccessfullyReturnsHttp201Created() throws Exception {
+    public void testThatCreateAuthorSuccessfullyReturnsHttp201Created() throws Exception {
         AuthorEntity testAuthorA = TestDataUtil.createTestAuthorA();
         testAuthorA.setId(null);
         String authorJson = objectMapper.writeValueAsString(testAuthorA);
@@ -40,6 +40,26 @@ public class AuthorControllerIntegrationTests {
 
         ).andExpect(
                 MockMvcResultMatchers.status().isCreated()
+        );
+    }
+
+    @Test
+    public void testThatCreateAuthorSuccessfullyReturnsSavedAuthor() throws Exception {
+        AuthorEntity testAuthorA = TestDataUtil.createTestAuthorA();
+        testAuthorA.setId(null);
+        String authorJson = objectMapper.writeValueAsString(testAuthorA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/authors")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(authorJson)
+
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.name").value("Aditya Mitra")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.age").value(21)
         );
     }
 
