@@ -1,6 +1,8 @@
 package com.example.DatabaseWebApp.controllers;
 
+import com.example.DatabaseWebApp.domain.dto.AuthorDto;
 import com.example.DatabaseWebApp.domain.dto.BookDto;
+import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
 import com.example.DatabaseWebApp.domain.entities.BookEntity;
 import com.example.DatabaseWebApp.mappers.Mapper;
 import com.example.DatabaseWebApp.services.BookService;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,6 +39,16 @@ public class BookController {
                 .stream()
                 .map(bookMapper::mapTo)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("books/{isbn}")
+    public ResponseEntity<BookDto> getBook(@PathVariable("isbn") String isbn) {
+        Optional<BookEntity> foundBookEntity = bookService.findOne(isbn);
+
+        return foundBookEntity.map(bookEntity -> {
+            BookDto bookDto = bookMapper.mapTo(bookEntity);
+            return new ResponseEntity<>(bookDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }

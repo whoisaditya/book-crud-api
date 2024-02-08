@@ -1,5 +1,6 @@
 package com.example.DatabaseWebApp.services.impl;
 
+import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
 import com.example.DatabaseWebApp.domain.entities.BookEntity;
 import com.example.DatabaseWebApp.repositories.BookRepository;
 import com.example.DatabaseWebApp.services.BookService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -30,5 +32,10 @@ public class BookServiceImpl implements BookService {
                         .findAll()
                         .spliterator(), false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<BookEntity> findOne(String isbn) {
+        return bookRepository.findById(isbn);
     }
 }
