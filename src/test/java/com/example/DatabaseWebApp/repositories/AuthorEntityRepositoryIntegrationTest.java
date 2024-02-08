@@ -27,7 +27,7 @@ public class AuthorEntityRepositoryIntegrationTest {
 
     @Test
     public void testThatAuthorCanBeCreatedAndRecalled() {
-        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntity);
 
         Optional<AuthorEntity> result = underTest.findById(authorEntity.getId());
@@ -37,11 +37,11 @@ public class AuthorEntityRepositoryIntegrationTest {
 
     @Test
     public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
-        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntityA);
-        AuthorEntity authorEntityB = TestDataUtil.createTestAuthorB();
+        AuthorEntity authorEntityB = TestDataUtil.createTestAuthorEntityB();
         underTest.save(authorEntityB);
-        AuthorEntity authorEntityC = TestDataUtil.createTestAuthorC();
+        AuthorEntity authorEntityC = TestDataUtil.createTestAuthorEntityC();
         underTest.save(authorEntityC);
 
         Iterable<AuthorEntity> result = underTest.findAll();
@@ -52,7 +52,7 @@ public class AuthorEntityRepositoryIntegrationTest {
 
      @Test
     public void testThatAuthorCanBeUpdated() {
-        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntityA = TestDataUtil.createTestAuthorEntityA();
         underTest.save(authorEntityA);
         authorEntityA.setName("UPDATED");
 
@@ -65,7 +65,7 @@ public class AuthorEntityRepositoryIntegrationTest {
 
      @Test
      public void testThatAuthorCanBeDeleted() {
-         AuthorEntity authorEntityA = TestDataUtil.createTestAuthorA();
+         AuthorEntity authorEntityA = TestDataUtil.createTestAuthorEntityA();
          underTest.save(authorEntityA);
 
          underTest.deleteById(authorEntityA.getId());
@@ -76,11 +76,11 @@ public class AuthorEntityRepositoryIntegrationTest {
 
     @Test
     public  void testThatGetAuthorWithAgeLessThan() {
-        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorEntityA();
         underTest.save(testAuthorAEntity);
-        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
+        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorEntityB();
         underTest.save(testAuthorBEntity);
-        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorC();
+        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorEntityC();
         underTest.save(testAuthorCEntity);
 
         Iterable<AuthorEntity> result = underTest.ageLessThan(22);
@@ -91,11 +91,11 @@ public class AuthorEntityRepositoryIntegrationTest {
     @Test
     public void testThatGetsAuthorWithAgeGreaterThan() {
 
-        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity testAuthorAEntity = TestDataUtil.createTestAuthorEntityA();
         underTest.save(testAuthorAEntity);
-        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorB();
+        AuthorEntity testAuthorBEntity = TestDataUtil.createTestAuthorEntityB();
         underTest.save(testAuthorBEntity);
-        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorC();
+        AuthorEntity testAuthorCEntity = TestDataUtil.createTestAuthorEntityC();
         underTest.save(testAuthorCEntity);
 
         Iterable<AuthorEntity> result = underTest.findAuthorsWithAgeGreaterThan(21);

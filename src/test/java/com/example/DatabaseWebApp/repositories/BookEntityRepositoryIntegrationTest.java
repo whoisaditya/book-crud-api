@@ -29,9 +29,9 @@ public class BookEntityRepositoryIntegrationTest {
 
     @Test
     public void testThatBookCanBeCreatedAndRecalled() {
-        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
 
-        BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
+        BookEntity bookEntity = TestDataUtil.createTestBookEntityA(authorEntity);
 
         underTest.save(bookEntity);
 
@@ -43,15 +43,15 @@ public class BookEntityRepositoryIntegrationTest {
 
     @Test
     public void testThatMultipleBooksCanBeCreatedAndRecalled() {
-        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
 
-        BookEntity bookEntityA = TestDataUtil.createTestBookA(authorEntity);
+        BookEntity bookEntityA = TestDataUtil.createTestBookEntityA(authorEntity);
         underTest.save(bookEntityA);
 
-        BookEntity bookEntityB = TestDataUtil.createTestBookB(authorEntity);
+        BookEntity bookEntityB = TestDataUtil.createTestBookEntityB(authorEntity);
         underTest.save(bookEntityB);
 
-        BookEntity bookEntityC = TestDataUtil.createTestBookC(authorEntity);
+        BookEntity bookEntityC = TestDataUtil.createTestBookEntityC(authorEntity);
         underTest.save(bookEntityC);
 
         Iterable<BookEntity> result = underTest.findAll();
@@ -62,9 +62,9 @@ public class BookEntityRepositoryIntegrationTest {
     }
     @Test
     public void testThatBookCanBeUpdated() {
-        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
 
-        BookEntity bookEntityA = TestDataUtil.createTestBookA(authorEntity);
+        BookEntity bookEntityA = TestDataUtil.createTestBookEntityA(authorEntity);
          underTest.save(bookEntityA);
 
         bookEntityA.setTitle("UPDATED");
@@ -78,9 +78,9 @@ public class BookEntityRepositoryIntegrationTest {
 
     @Test
     public void testThatBookCanBeDeleted() {
-        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
 
-        BookEntity bookEntityA = TestDataUtil.createTestBookA(authorEntity);
+        BookEntity bookEntityA = TestDataUtil.createTestBookEntityA(authorEntity);
         underTest.save(bookEntityA);
 
         underTest.deleteById(bookEntityA.getIsbn());
