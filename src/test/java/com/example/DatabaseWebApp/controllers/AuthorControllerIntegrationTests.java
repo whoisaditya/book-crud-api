@@ -171,4 +171,28 @@ public class AuthorControllerIntegrationTests {
                 MockMvcResultMatchers.status().isNotFound()
         );
     }
+
+    @Test
+    public void testThatFullUpdateUpdatesExistingAuthor() throws Exception {
+        AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
+        AuthorEntity savedTestAuthorEntityA = authorService.save(testAuthorEntityA);
+
+        AuthorEntity testAuthorEntityB = TestDataUtil.createTestAuthorEntityB();
+        testAuthorEntityB.setId(testAuthorEntityA.getId());
+
+        String testAuthorEntityBJson = objectMapper.writeValueAsString(testAuthorEntityB);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/authors/" + savedTestAuthorEntityA.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testAuthorEntityBJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(savedTestAuthorEntityA.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.name").value(testAuthorEntityB.getName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.age").value(testAuthorEntityB.getAge())
+        );
+
+    }
 }
