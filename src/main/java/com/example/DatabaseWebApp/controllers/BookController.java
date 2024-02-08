@@ -1,8 +1,6 @@
 package com.example.DatabaseWebApp.controllers;
 
-import com.example.DatabaseWebApp.domain.dto.AuthorDto;
 import com.example.DatabaseWebApp.domain.dto.BookDto;
-import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
 import com.example.DatabaseWebApp.domain.entities.BookEntity;
 import com.example.DatabaseWebApp.mappers.Mapper;
 import com.example.DatabaseWebApp.services.BookService;
@@ -25,10 +23,20 @@ public class BookController {
     private BookService bookService;
 
     @PutMapping("books/{isbn}")
-    public ResponseEntity<BookDto> createBook(@PathVariable("isbn") String isbn, @RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> createUpdateBook(@PathVariable("isbn") String isbn, @RequestBody BookDto bookDto) {
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
+        boolean bookExists = bookService.isExists(isbn);
+
         BookEntity savedBookEntity = bookService.save(isbn, bookEntity);
-        return new ResponseEntity<>(bookMapper.mapTo(savedBookEntity), HttpStatus.CREATED);
+        BookDto savedBookDto =  bookMapper.mapTo(savedBookEntity);
+
+        if (bookExists) {
+            //update
+            return new ResponseEntity<>(savedBookDto, HttpStatus.OK);
+        } else {
+            // create
+            return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
+        }
     }
 
     @GetMapping("/books")

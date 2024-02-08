@@ -50,6 +50,25 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
+    public void testThatUpdateBookSuccessfullyReturnsHttp200Ok() throws Exception {
+        BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
+        BookEntity savedTestBookEntityA = bookService.save(testBookEntityA.getIsbn(), testBookEntityA);
+
+        BookDto testBookDtoA = TestDataUtil.createTestBookDtoA(null);
+        testBookDtoA.setIsbn(savedTestBookEntityA.getIsbn());
+
+        String testBookJson = objectMapper.writeValueAsString(testBookDtoA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/books/" + testBookDtoA.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testBookJson)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
     public void testThatCreateBookSuccessfullyReturnsSavedBook() throws Exception {
         BookDto testBookDtoA = TestDataUtil.createTestBookDtoA(null);
 
@@ -63,6 +82,28 @@ public class BookControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.isbn").value("70-57-64-82-83")
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.title").value("The secret life of Aditya Mitra")
+        );
+    }
+
+    @Test
+    public void testThatUpdateBookSuccessfullyReturnsUpdateBook() throws Exception {
+        BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
+        BookEntity savedTestBookEntityA = bookService.save(testBookEntityA.getIsbn(), testBookEntityA);
+
+        BookDto testBookDtoA = TestDataUtil.createTestBookDtoA(null);
+        testBookDtoA.setIsbn(savedTestBookEntityA.getIsbn());
+        testBookDtoA.setTitle("UPDATED");
+
+        String testBookJson = objectMapper.writeValueAsString(testBookDtoA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/books/" + testBookDtoA.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testBookJson)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.isbn").value("70-57-64-82-83")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.title").value("UPDATED")
         );
     }
 

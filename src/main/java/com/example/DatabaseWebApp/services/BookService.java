@@ -13,4 +13,6 @@ public interface BookService {
     public List<BookEntity> findAll();
 
     public Optional<BookEntity> findOne(String isbn);
+
+    public boolean isExists(String isbn);
 }
