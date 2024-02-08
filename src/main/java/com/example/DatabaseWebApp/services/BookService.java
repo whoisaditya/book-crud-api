@@ -15,4 +15,6 @@ public interface BookService {
     public Optional<BookEntity> findOne(String isbn);
 
     public boolean isExists(String isbn);
+
+    public BookEntity partialUpdate(String isbn, BookEntity bookEntity);
 }
