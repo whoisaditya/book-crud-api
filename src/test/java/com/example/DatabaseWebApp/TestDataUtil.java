@@ -50,7 +50,7 @@ public class TestDataUtil {
         return BookDto.builder()
                 .isbn("70-57-64-82-83")
                 .title("The secret life of Aditya Mitra")
-                .authorDto(authorDto)
+                .author(authorDto)
                 .build();
     }
 

@@ -8,5 +8,5 @@ public interface AuthorService {
 
     public AuthorEntity save(AuthorEntity authorEntity);
 
-    List<AuthorEntity> findAll();
+    public List<AuthorEntity> findAll();
 }

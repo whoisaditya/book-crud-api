@@ -35,6 +35,9 @@ public class AuthorController {
     @GetMapping(path = "/authors")
     public List<AuthorDto> listAuthors() {
         List<AuthorEntity> authors = authorService.findAll();
-        return authors.stream().map(authorMapper::mapTo).collect(Collectors.toList());
+        return authors
+                .stream()
+                .map(authorMapper::mapTo)
+                .collect(Collectors.toList());
     }
 }
