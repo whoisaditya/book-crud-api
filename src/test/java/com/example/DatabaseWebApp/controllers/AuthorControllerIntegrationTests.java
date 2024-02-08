@@ -3,6 +3,7 @@ package com.example.DatabaseWebApp.controllers;
 import com.example.DatabaseWebApp.TestDataUtil;
 import com.example.DatabaseWebApp.domain.dto.AuthorDto;
 import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
+import com.example.DatabaseWebApp.services.AuthorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +22,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 public class AuthorControllerIntegrationTests {
+
+    @Autowired
+    private AuthorService authorService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -62,6 +66,33 @@ public class AuthorControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.name").value("Aditya Mitra")
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.age").value(21)
+        );
+    }
+
+    @Test
+    public void testThatListAuthorsReturnsHttp200() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
+        authorService.save(authorEntity);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/authors")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].name").value("Aditya Mitra")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].age").value(21)
         );
     }
 
