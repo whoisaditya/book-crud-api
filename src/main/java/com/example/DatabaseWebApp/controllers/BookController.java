@@ -24,7 +24,7 @@ public class BookController {
     @PutMapping("books/{isbn}")
     public ResponseEntity<BookDto> createBook(@PathVariable("isbn") String isbn, @RequestBody BookDto bookDto) {
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
-        BookEntity savedBookEntity = bookService.createBook(isbn, bookEntity);
+        BookEntity savedBookEntity = bookService.save(isbn, bookEntity);
         return new ResponseEntity<>(bookMapper.mapTo(savedBookEntity), HttpStatus.CREATED);
     }
 

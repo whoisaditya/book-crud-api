@@ -4,6 +4,9 @@ package com.example.DatabaseWebApp.controllers;
 import com.example.DatabaseWebApp.TestDataUtil;
 import com.example.DatabaseWebApp.domain.dto.AuthorDto;
 import com.example.DatabaseWebApp.domain.dto.BookDto;
+import com.example.DatabaseWebApp.domain.entities.AuthorEntity;
+import com.example.DatabaseWebApp.domain.entities.BookEntity;
+import com.example.DatabaseWebApp.services.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +25,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 public class BookControllerIntegrationTests {
+
+    @Autowired
+    private BookService bookService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -59,6 +65,31 @@ public class BookControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.isbn").value("70-57-64-82-83")
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.title").value("The secret life of Aditya Mitra")
+        );
+    }
+
+    @Test
+    public void testThatListBooksReturnsHttp200() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatListBooksReturnsListOfBooks() throws Exception {
+        BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
+        bookService.save(testBookEntityA.getIsbn(), testBookEntityA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].isbn").value("70-57-64-82-83")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].title").value("The secret life of Aditya Mitra")
         );
     }
 }

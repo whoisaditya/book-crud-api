@@ -8,12 +8,10 @@ import com.example.DatabaseWebApp.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,5 +37,15 @@ public class AuthorController {
                 .stream()
                 .map(authorMapper::mapTo)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/authors/{id}")
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable("id") Long id) {
+        Optional<AuthorEntity> foundAuthorEntity = authorService.findOne(id);
+
+        return foundAuthorEntity.map(authorEntity -> {
+            AuthorDto authorDto = authorMapper.mapTo(authorEntity);
+            return new ResponseEntity<>(authorDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BookService {
 
-    public BookEntity createBook(String isbn, BookEntity bookEntity);
+    public BookEntity save(String isbn, BookEntity bookEntity);
 
     public List<BookEntity> findAll();
 }
