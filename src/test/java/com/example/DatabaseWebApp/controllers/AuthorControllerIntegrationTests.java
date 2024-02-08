@@ -102,7 +102,7 @@ public class AuthorControllerIntegrationTests {
         authorService.save(authorEntity);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors/1")
+                MockMvcRequestBuilders.get("/authors/" + authorEntity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()
@@ -111,8 +111,10 @@ public class AuthorControllerIntegrationTests {
 
     @Test
     public void testThatGetAuthorReturnsHttpStatus404WhenNoAuthorExists() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
+
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors/99")
+                MockMvcRequestBuilders.get("/authors/" + authorEntity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isNotFound()
@@ -125,7 +127,7 @@ public class AuthorControllerIntegrationTests {
         authorService.save(authorEntity);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors/1")
+                MockMvcRequestBuilders.get("/authors/" + authorEntity.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.id").value(1)
