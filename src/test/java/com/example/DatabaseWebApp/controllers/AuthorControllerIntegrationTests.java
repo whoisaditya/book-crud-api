@@ -214,7 +214,7 @@ public class AuthorControllerIntegrationTests {
     }
 
     @Test
-    public void testThatPartialUpdateAuthorReturnsHttpStatus400WhenNoAuthorExists() throws Exception {
+    public void testThatPartialUpdateAuthorReturnsHttpStatus404WhenNoAuthorExists() throws Exception {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorEntityA();
 
         AuthorDto testAuthorDtoA = TestDataUtil.createTestAuthorDtoA();
