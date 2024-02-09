@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DatabaseWebAppApplication {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(DatabaseWebAppApplication.class, args);
 	}
