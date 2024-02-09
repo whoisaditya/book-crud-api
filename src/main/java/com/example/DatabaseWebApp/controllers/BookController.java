@@ -5,6 +5,8 @@ import com.example.DatabaseWebApp.domain.entities.BookEntity;
 import com.example.DatabaseWebApp.mappers.Mapper;
 import com.example.DatabaseWebApp.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +45,11 @@ public class BookController {
         }
     }
 
-    @GetMapping("/")
-    public List<BookDto> listBooks() {
-        List<BookEntity> books = bookService.findAll();
+    @GetMapping()
+    public Page<BookDto> listBooks(Pageable pageable) {
+        Page<BookEntity> books = bookService.findAll(pageable);
 
-        return books
-                .stream()
-                .map(bookMapper::mapTo)
-                .collect(Collectors.toList());
+        return books.map(bookMapper::mapTo);
     }
 
     @GetMapping("/{isbn}")
