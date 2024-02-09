@@ -110,7 +110,7 @@ public class BookControllerIntegrationTests {
     @Test
     public void testThatListBooksReturnsHttp200() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/books/")
+                MockMvcRequestBuilders.get("/books")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()
@@ -123,12 +123,12 @@ public class BookControllerIntegrationTests {
         bookService.save(testBookEntityA.getIsbn(), testBookEntityA);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/books/")
+                MockMvcRequestBuilders.get("/books")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].isbn").value("70-57-64-82-83")
+                MockMvcResultMatchers.jsonPath("$.content[0].isbn").value("70-57-64-82-83")
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].title").value("The secret life of Aditya Mitra")
+                MockMvcResultMatchers.jsonPath("$.content[0].title").value("The secret life of Aditya Mitra")
         );
     }
 

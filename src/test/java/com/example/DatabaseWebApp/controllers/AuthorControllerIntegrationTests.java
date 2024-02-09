@@ -72,7 +72,7 @@ public class AuthorControllerIntegrationTests {
     @Test
     public void testThatListAuthorsReturnsHttp200() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors/")
+                MockMvcRequestBuilders.get("/authors")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()
@@ -85,14 +85,14 @@ public class AuthorControllerIntegrationTests {
         authorService.save(authorEntity);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors/")
+                MockMvcRequestBuilders.get("/authors")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].id").value(1)
+                MockMvcResultMatchers.jsonPath("$.content[0].id").value(1)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].name").value("Aditya Mitra")
+                MockMvcResultMatchers.jsonPath("$.content[0].name").value("Aditya Mitra")
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].age").value(21)
+                MockMvcResultMatchers.jsonPath("$.content[0].age").value(21)
         );
     }
 
