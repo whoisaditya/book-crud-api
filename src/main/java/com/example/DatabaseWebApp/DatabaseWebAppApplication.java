@@ -16,6 +16,6 @@ public class DatabaseWebAppApplication {
 
 	@GetMapping("/")
 	public String apiRoot() {
-		return "Hello, Aditya!";
+		return "Book API up and running!";
 	}
 }
