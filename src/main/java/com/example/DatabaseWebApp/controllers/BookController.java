@@ -9,12 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+// Controller Advice
+// Rest Template
 @RestController
+@RequestMapping("/books")
 public class BookController {
 
     @Autowired
@@ -23,7 +26,7 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @PutMapping("books/{isbn}")
+    @PutMapping("/{isbn}")
     public ResponseEntity<BookDto> createUpdateBook(@PathVariable("isbn") String isbn, @RequestBody BookDto bookDto) {
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
         boolean bookExists = bookService.isExists(isbn);
@@ -40,7 +43,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/books")
+    @GetMapping("/")
     public List<BookDto> listBooks() {
         List<BookEntity> books = bookService.findAll();
 
@@ -50,7 +53,7 @@ public class BookController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("books/{isbn}")
+    @GetMapping("/{isbn}")
     public ResponseEntity<BookDto> getBook(@PathVariable("isbn") String isbn) {
         Optional<BookEntity> foundBookEntity = bookService.findOne(isbn);
 
@@ -60,7 +63,7 @@ public class BookController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PatchMapping("books/{isbn}")
+    @PatchMapping("/{isbn}")
     public ResponseEntity<BookDto> partialUpdateBook(@PathVariable("isbn") String isbn, @RequestBody BookDto bookDto) {
         if(!bookService.isExists(isbn)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -73,7 +76,7 @@ public class BookController {
     }
 
 
-    @DeleteMapping("books/{isbn}")
+    @DeleteMapping("/{isbn}")
     public ResponseEntity deleteBook(@PathVariable("isbn") String isbn) {
         bookService.delete(isbn);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

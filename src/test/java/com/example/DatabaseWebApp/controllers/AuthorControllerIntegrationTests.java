@@ -39,7 +39,7 @@ public class AuthorControllerIntegrationTests {
         String testAuthorDtoAJson = objectMapper.writeValueAsString(testAuthorDtoA);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/authors")
+                MockMvcRequestBuilders.post("/authors/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testAuthorDtoAJson)
 
@@ -56,7 +56,7 @@ public class AuthorControllerIntegrationTests {
         String testAuthorDtoAJson = objectMapper.writeValueAsString(testAuthorDtoA);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/authors")
+                MockMvcRequestBuilders.post("/authors/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(testAuthorDtoAJson)
 
@@ -72,7 +72,7 @@ public class AuthorControllerIntegrationTests {
     @Test
     public void testThatListAuthorsReturnsHttp200() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors")
+                MockMvcRequestBuilders.get("/authors/")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()
@@ -85,7 +85,7 @@ public class AuthorControllerIntegrationTests {
         authorService.save(authorEntity);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/authors")
+                MockMvcRequestBuilders.get("/authors/")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].id").value(1)

@@ -15,7 +15,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/authors")
 public class AuthorController {
+
+
 
     @Autowired
     private AuthorService authorService;
@@ -23,14 +26,14 @@ public class AuthorController {
     @Autowired
     private Mapper<AuthorEntity, AuthorDto> authorMapper;
 
-    @PostMapping(path = "/authors")
+    @PostMapping(path = "/")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
         AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "/authors")
+    @GetMapping("/")
     public List<AuthorDto> listAuthors() {
         List<AuthorEntity> authors = authorService.findAll();
         return authors
@@ -39,7 +42,7 @@ public class AuthorController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/authors/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AuthorDto> getAuthor(@PathVariable("id") Long id) {
         Optional<AuthorEntity> foundAuthorEntity = authorService.findOne(id);
 
@@ -49,7 +52,7 @@ public class AuthorController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("authors/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> fullUpdateAuthor(@PathVariable("id") Long id, @RequestBody AuthorDto authorDto) {
         if(!authorService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -62,7 +65,7 @@ public class AuthorController {
         return  new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.OK);
     }
 
-    @PatchMapping("authors/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<AuthorDto> partialUpdateAuthor(@PathVariable("id") Long id, @RequestBody AuthorDto authorDto) {
         if(!authorService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,7 +77,7 @@ public class AuthorController {
         return new ResponseEntity<>(authorMapper.mapTo(updatedAuthorEntity), HttpStatus.OK);
     }
 
-    @DeleteMapping("authors/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteAuthor(@PathVariable("id") Long id) {
         authorService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
