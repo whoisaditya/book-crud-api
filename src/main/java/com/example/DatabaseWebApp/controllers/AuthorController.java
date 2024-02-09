@@ -6,6 +6,8 @@ import com.example.DatabaseWebApp.domain.dto.AuthorDto;
 import com.example.DatabaseWebApp.mappers.Mapper;
 import com.example.DatabaseWebApp.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +35,11 @@ public class AuthorController {
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
 
-    @GetMapping("/")
-    public List<AuthorDto> listAuthors() {
-        List<AuthorEntity> authors = authorService.findAll();
-        return authors
-                .stream()
-                .map(authorMapper::mapTo)
-                .collect(Collectors.toList());
+    @GetMapping()
+    public Page<AuthorDto> listAuthors(Pageable pageable) {
+        Page<AuthorEntity> authors = authorService.findAll(pageable);
+
+        return authors.map(authorMapper::mapTo);
     }
 
     @GetMapping("/{id}")
