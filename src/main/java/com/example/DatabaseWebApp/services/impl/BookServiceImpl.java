@@ -6,6 +6,7 @@ import com.example.DatabaseWebApp.repositories.BookRepository;
 import com.example.DatabaseWebApp.services.BookService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Cacheable(value = "bookCache")
     public Optional<BookEntity> findOne(String isbn) {
         return bookRepository.findById(isbn);
     }

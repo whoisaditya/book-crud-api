@@ -7,6 +7,7 @@ import com.example.DatabaseWebApp.mappers.Mapper;
 import com.example.DatabaseWebApp.services.AuthorService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,9 @@ import org.slf4j.LoggerFactory;
 public class AuthorController {
 
     Logger logger = LoggerFactory.getLogger(AuthorController.class);
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Autowired
     private AuthorService authorService;

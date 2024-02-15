@@ -3,6 +3,8 @@ package com.example.DatabaseWebApp.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 //import javax.validation.constraints.*;
 
 @Data
@@ -11,7 +13,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "authors")
-public class AuthorEntity {
+public class AuthorEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_seq")
     @Column(name = "id")

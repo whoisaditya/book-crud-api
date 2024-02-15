@@ -5,6 +5,7 @@ import com.example.DatabaseWebApp.repositories.AuthorRepository;
 import com.example.DatabaseWebApp.services.AuthorService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Cacheable(value = "author", key = "#id")
     public Optional<AuthorEntity> findOne(Long id) {
         return authorRepository.findById(id);
     }

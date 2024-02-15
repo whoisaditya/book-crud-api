@@ -8,13 +8,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "books")
-public class BookEntity {
+public class BookEntity implements Serializable  {
     @Id
     @Column(name = "isbn")
     private String isbn;
