@@ -147,10 +147,10 @@ public class BookControllerIntegrationTests {
 
     @Test
     public void testThatGetBookReturnsHttpStatus404WhenNoBookExists() throws Exception {
-        BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
+        BookEntity testBookEntityB = TestDataUtil.createTestBookEntityB(null);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/books/" + testBookEntityA.getIsbn())
+                MockMvcRequestBuilders.get("/books/" + testBookEntityB.getIsbn())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isNotFound()
